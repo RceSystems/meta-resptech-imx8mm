@@ -4,5 +4,5 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-KERNEL_DEVICETREE = "imx8mm-resptech.dts"
+KERNEL_DEVICETREE = "freescale/imx8mm-resptech.dtb"
 
