@@ -1,47 +1,47 @@
-# Recipe created by recipetool
-# This is the basis of a recipe and may need further editing in order to be fully functional.
-# (Feel free to remove these comments when editing.)
-
-# WARNING: the following LICENSE and LIC_FILES_CHKSUM values are best guesses - it is
-# your responsibility to verify that the values are complete and correct.
-#
-# NOTE: multiple licenses have been detected; they have been separated with &
-# in the LICENSE value for now since it is a reasonable assumption that all
-# of the licenses apply. If instead there is a choice between the multiple
-# licenses then you should change the value to separate the licenses with |
-# instead of &. If there is any doubt, check the accompanying documentation
-# to determine which situation is applicable.
+SUMMARY = "A hardware health monitoring package for Linux"
+DESCRIPTION = "Lm-sensors is a hardware health monitoring package for Linux. \
+               It allows you to access information from temperature, voltage, \
+               and fan speed sensors."
+HOMEPAGE = "http://www.lm-sensors.org/"
+DEPENDS = "sysfsutils virtual/libiconv \
+           bison-native flex-native"
 LICENSE = "LGPLv2.1 & GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING.LGPL;md5=4fbd65380cdd255951079008b364516c \
                     file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 
-SRC_URI = "git://github.com/lm-sensors/lm-sensors.git;protocol=https"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-# Modify these as desired
-PV = "1.0+git${SRCPV}"
+SRC_URI = "git://github.com/lm-sensors/lm-sensors.git;protocol=https"
 SRCREV = "31d1f125d8076f1c8c8f3224b31d240e6e6a1763"
 
 S = "${WORKDIR}/git"
 
-# NOTE: some of these dependencies may be optional, check the Makefile and/or upstream documentation
-DEPENDS = "bison-native flex-native"
-
-# NOTE: this is a Makefile-only piece of software, so we cannot generate much of the
-# recipe automatically - you will need to examine the Makefile yourself and ensure
-# that the appropriate arguments are passed in.
-
-do_configure () {
-	# Specify any needed configure commands here
-	:
-}
+EXTRA_OEMAKE = 'LINUX=${STAGING_KERNEL_DIR} EXLDFLAGS="${LDFLAGS}" \
+		MACHINE=${TARGET_ARCH} PREFIX=${prefix} CC="${CC}" \
+		AR="${AR}" MANDIR=${mandir}'
 
 do_compile () {
-	# You will almost certainly need to add additional arguments here
-	oe_runmake 'CC=${CC}'
+	oe_runmake user PROG_EXTRA=sensors
 }
 
 do_install () {
-	# NOTE: unable to determine what to put here - there is a Makefile but no
-	# target named "install", so you will need to define this yourself
-	:
+	oe_runmake user_install DESTDIR=${D}
 }
+
+PACKAGES =+ "libsensors libsensors-dev libsensors-staticdev libsensors-dbg libsensors-doc"
+PACKAGES =+ "lmsensors-sensors lmsensors-sensors-dbg lmsensors-sensors-doc"
+PACKAGES =+ "lmsensors-scripts"
+
+FILES_lmsensors-scripts = "${bindir}/*.pl ${bindir}/ddcmon ${sbindir}/fancontrol* ${sbindir}/pwmconfig ${sbindir}/sensors-detect"
+RDEPENDS_lmsensors-scripts += "lmsensors-sensors perl bash"
+RDEPENDS_lmsensors-apps += "perl-module-strict perl-module-vars perl-module-warnings-register perl-module-warnings"
+RDEPENDS_lmsensors-scripts += "perl-module-fcntl perl-module-exporter perl-module-xsloader perl-module-exporter-heavy perl-module-file-basename perl-module-constant"
+
+FILES_lmsensors-sensors = "${bindir}/sensors ${sysconfdir}"
+FILES_lmsensors-sensors-dbg += "${bindir}/.debug/sensors"
+FILES_lmsensors-sensors-doc = "${mandir}/man1 ${mandir}/man5"
+FILES_libsensors = "${libdir}/libsensors.so.*"
+FILES_libsensors-dbg += "${libdir}/.debug"
+FILES_libsensors-dev = "${libdir}/libsensors.so ${includedir}"
+FILES_libsensors-staticdev = "${libdir}/libsensors.a"
+FILES_libsensors-doc = "${mandir}/man3"
