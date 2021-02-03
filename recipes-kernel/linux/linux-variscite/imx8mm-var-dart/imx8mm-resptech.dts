@@ -508,7 +508,7 @@
 	status = "okay";
 };
 
-clocks {
+/ clocks {
         spi_uart_clk: osc_max14830 {
                 compatible = "fixed-clock";
                 #clock-cells = <0>;
