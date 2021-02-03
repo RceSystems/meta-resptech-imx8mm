@@ -474,10 +474,13 @@
 };
 
 &usbotg1 {
-	dr_mode = "otg";
+	dr_mode = "host";
 	picophy,pre-emp-curr-control = <3>;
 	picophy,dc-vol-level-adjust = <7>;
-/*	extcon = <0>, <&extcon_usb1>;                  !!! You removed this because is was deleted in the imx8mm-var-som-symphony-legacy.dts */
+	srp-disable;
+	hnp-disable;
+	adp-disable;
+	disable-over-current;
 	status = "okay";
 };
 
