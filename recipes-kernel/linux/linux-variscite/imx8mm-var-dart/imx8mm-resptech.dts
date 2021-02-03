@@ -526,6 +526,6 @@ clocks {
                 interrupts = <7 IRQ_TYPE_LEVEL_LOW>;
                 gpio-controller;
                 #gpio-cells = <2>;
-  i      };
+        };
         status = "okay";
 };
