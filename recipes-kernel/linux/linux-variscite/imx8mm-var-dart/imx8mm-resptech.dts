@@ -507,3 +507,25 @@
 	vmmc-supply = <&reg_usdhc2_vmmc>;
 	status = "okay";
 };
+
+clocks {
+        spi_uart_clk: osc_max14830 {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <3686400>;
+        };
+};
+
+&ecspi1 {
+        max14830: max14830@0 {
+                compatible = "maxim,max14830";
+                reg = <0>;
+                clocks = <&spi_uart_clk>;
+                clock-names = "osc";
+                interrupt-parent = <&gpio3>;
+                interrupts = <7 IRQ_TYPE_LEVEL_LOW>;
+                gpio-controller;
+                #gpio-cells = <2>;
+  i      };
+        status = "okay";
+};
