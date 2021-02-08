@@ -111,18 +111,6 @@
 	};
 };
 
-&csi1_bridge {
-	fsl,mipi-mode;
-	status = "okay";
-	port {
-		csi1_ep: endpoint {
-			remote-endpoint = <&csi1_mipi_ep>;
-		};
-	};
-};
-
-&gpio4 {
-	cam_buf_hog {
 		gpio-hog;
 		gpios = <5 GPIO_ACTIVE_HIGH>;
 		output-low;
@@ -136,16 +124,6 @@
 			MX8MM_IOMUXC_SPDIF_RX_GPIO5_IO4			0x16
 		>;
 	};
-
-/*
-	pinctrl_csi1: csi1grp {
-		fsl,pins = <
-			MX8MM_IOMUXC_GPIO1_IO13_GPIO1_IO13		0x19 // CAM_RST
-			MX8MM_IOMUXC_ECSPI2_MISO_GPIO5_IO12		0x19 // CAM_PWR
-			MX8MM_IOMUXC_SAI1_RXD3_GPIO4_IO5		0x19 // CAM_BUF
-		>;
-	};
-*/
 
 	pinctrl_max14830: max14830grp {
 		fsl,pins = <
@@ -302,36 +280,6 @@
 	sda-gpios = <&gpio5 17 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 
-/*
-	ov5640_mipi1: ov5640_mipi1@3c {
-		status = "okay";
-		compatible = "ovti,ov5640_mipi";
-		reg = <0x3c>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_csi1>;
-		clocks = <&clk IMX8MM_CLK_CLKO1>;
-		clock-names = "csi_mclk";
-// Disabled CLKO2, since VAR-SOM-MX8M-MINI camera expansion board uses
-// its own oscillator. Enable CLK02 if your design requires it
-//
-#if 0
-		assigned-clocks = <&clk IMX8MM_CLK_CLKO1>;
-		assigned-clock-parents = <&clk IMX8MM_CLK_24M>;
-		assigned-clock-rates = <24000000>;
-#endif
-		csi_id = <0>;
-		pwn-gpios = <&gpio5 12 GPIO_ACTIVE_HIGH>;
-		rst-gpios = <&gpio1 13 GPIO_ACTIVE_HIGH>;
-		mclk = <24000000>;
-		mclk_source = <0>;
-		port {
-			ov5640_mipi1_ep: endpoint {
-				remote-endpoint = <&mipi1_sensor_ep>;
-			};
-		};
-	};
-*/
-
 	/* GPIO expander */
 	pca9534: gpio@20 {
 		compatible = "nxp,pca9534";
@@ -418,25 +366,6 @@
 		compatible = "lm75";
 		reg = <0x4b>;
 		status = "okay";
-	};
-};
-
-&mipi_csi_1 {
-	#address-cells = <1>;
-	#size-cells = <0>;
-	status = "okay";
-	port {
-		mipi1_sensor_ep: endpoint@1 {
-			remote-endpoint = <&ov5640_mipi1_ep>;
-			data-lanes = <2>;
-			csis-hs-settle = <13>;
-			csis-clk-settle = <2>;
-			csis-wclk;
-		};
-
-		csi1_mipi_ep: endpoint@2 {
-			remote-endpoint = <&csi1_ep>;
-		};
 	};
 };
 
@@ -542,7 +471,7 @@
 
         max14830: max14830@0 {
                 compatible = "maxim,max14830";
-                reg = <0i>;
+                reg = <0>;
                 status = "okay";
                 clocks = <&spi_uart_clk>;
                 clock-names = "osc";
