@@ -118,12 +118,17 @@
 		>;
 	};
 
-	pinctrl_max14830: max14830grp {
+	pinctrl_spi_max14830: spi_max14830grp {
 		fsl,pins = <
                         MX8MM_IOMUXC_ECSPI2_SCLK_ECSPI2_SCLK       0x00000013    /* SOM pin 75, Ball E6, Symphony J17:6 */
                         MX8MM_IOMUXC_ECSPI2_MISO_ECSPI2_MISO       0x00000013    /* SOM pin 77, Ball A8, Symphony J17:8 */
                         MX8MM_IOMUXC_ECSPI2_MOSI_ECSPI2_MOSI       0x00000013    /* SOM pin 70, Ball B8, Symphony J17:4 */ 
                         MX8MM_IOMUXC_ECSPI2_SS0_GPIO5_IO13         0x00000013    /* CS - SOM pin 79, Ball A6, Symphony J17:10 */
+		>;
+	};
+       
+	pinctrl_max14830: max14830grp {
+		fsl,pins = <
                         MX8MM_IOMUXC_GPIO1_IO08_GPIO1_IO8          0x00000033    /* IRQ - SOM pin 117, Ball AG10, Symphony J17:7 */
                         MX8MM_IOMUXC_GPIO1_IO13_GPIO1_IO13         0x00000013    /* RST - SOM pin 40, Ball AD9, Symphony J17:2 - Unused */
 		>;
@@ -458,7 +463,7 @@
 	
 &ecspi2 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_max14830>;
+	pinctrl-0 = <&pinctrl_spi_max14830>;
 	cs-gpios = <&gpio5  3 GPIO_ACTIVE_LOW>;
 	status = "okay";
 
@@ -468,7 +473,7 @@
                 status = "okay";
                 clocks = <&spi_uart_clk>;
                 clock-names = "osc";
-                spi-max-frequency = <26000000>
+                spi-max-frequency = <26000000>;
                 pinctrl-names = "default";
                 pinctrl-0 = <&pinctrl_max14830>;
                 interrupt-parent = <&gpio1>;
