@@ -111,13 +111,6 @@
 	};
 };
 
-		gpio-hog;
-		gpios = <5 GPIO_ACTIVE_HIGH>;
-		output-low;
-		line-name = "cam_buf_en";
-	};
-};
-
 &iomuxc {
 	pinctrl_captouch: captouchgrp {
 		fsl,pins = <
@@ -127,7 +120,7 @@
 
 	pinctrl_max14830: max14830grp {
 		fsl,pins = <
-                        MX8MM_IOMUXC_ECSPI1_SCLK_ECSPI1_SCLK       0x00000013    /* SOM pin 75, Ball E6, Symphony J17:6 */
+                        MX8MM_IOMUXC_ECSPI2_SCLK_ECSPI2_SCLK       0x00000013    /* SOM pin 75, Ball E6, Symphony J17:6 */
                         MX8MM_IOMUXC_ECSPI2_MISO_ECSPI2_MISO       0x00000013    /* SOM pin 77, Ball A8, Symphony J17:8 */
                         MX8MM_IOMUXC_ECSPI2_MOSI_ECSPI2_MOSI       0x00000013    /* SOM pin 70, Ball B8, Symphony J17:4 */ 
                         MX8MM_IOMUXC_ECSPI2_SS0_GPIO5_IO13         0x00000013    /* CS - SOM pin 79, Ball A6, Symphony J17:10 */
