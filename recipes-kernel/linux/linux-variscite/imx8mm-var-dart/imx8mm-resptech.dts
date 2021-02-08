@@ -468,6 +468,7 @@
                 status = "okay";
                 clocks = <&spi_uart_clk>;
                 clock-names = "osc";
+                spi-max-frequency = <26000000>
                 pinctrl-names = "default";
                 pinctrl-0 = <&pinctrl_max14830>;
                 interrupt-parent = <&gpio1>;
