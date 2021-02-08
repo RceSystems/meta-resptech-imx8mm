@@ -129,7 +129,7 @@
        
 	pinctrl_max14830: max14830grp {
 		fsl,pins = <
-                        MX8MM_IOMUXC_GPIO1_IO08_GPIO1_IO8          0x00000033    /* IRQ - SOM pin 117, Ball AG10, Symphony J17:7 */
+                        MX8MM_IOMUXC_GPIO1_IO08_GPIO1_IO8          0x00000016    /* IRQ - SOM pin 117, Ball AG10, Symphony J17:7 */
                         MX8MM_IOMUXC_GPIO1_IO13_GPIO1_IO13         0x00000013    /* RST - SOM pin 40, Ball AD9, Symphony J17:2 - Unused */
 		>;
 	};
@@ -477,7 +477,7 @@
                 pinctrl-names = "default";
                 pinctrl-0 = <&pinctrl_max14830>;
                 interrupt-parent = <&gpio1>;
-                interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
+                interrupts = <8 IRQ_TYPE_EDGE_FALLING>;
                 gpio-controller;
                 #gpio-cells = <2>;
         };
