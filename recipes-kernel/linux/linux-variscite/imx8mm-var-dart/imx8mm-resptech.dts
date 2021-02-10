@@ -356,13 +356,13 @@
 	status = "okay";
 	
 	lm75@48 {
-		compatible = "lm75";
+		compatible = "ti,tmp275";
 		reg = <0x48>;
 		status = "okay";
 	};
 
 	lm75@4b {
-		compatible = "lm75";
+		compatible = "ti.tmp275";
 		reg = <0x4b>;
 		status = "okay";
 	};
