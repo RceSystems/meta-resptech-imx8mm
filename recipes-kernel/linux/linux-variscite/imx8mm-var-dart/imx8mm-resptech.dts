@@ -473,7 +473,7 @@
                 reg = <0>;
                 status = "okay";
                 clocks = <&spi_uart_clk>;
-                clock-names = "osc";
+                clock-names = "xtal";
                 spi-max-frequency = <5000000>;
                 pinctrl-names = "default";
                 pinctrl-0 = <&pinctrl_max14830>;
