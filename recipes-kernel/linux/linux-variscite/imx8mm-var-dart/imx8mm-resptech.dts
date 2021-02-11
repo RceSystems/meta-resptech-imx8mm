@@ -138,7 +138,7 @@
 		fsl,pins = <
                         MX8MM_IOMUXC_UART2_RXD_ECSPI3_MISO         0x00000014    /* Som pin 115, Ball F15, Symphony J18:9 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2) */
                         MX8MM_IOMUXC_UART1_TXD_ECSPI3_MOSI         0x00000014    /* Som pin 56,  Ball F13, Symphony J30:4 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2) */
-                        MX8MM_IOMUXC_UART1_RXD_ECSPI3_SCK          0x00000014    /* Som pin 54,  Ball E14, Symphony J30:18 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2) */
+                        MX8MM_IOMUXC_UART1_RXD_ECSPI3_SCLK         0x00000014    /* Som pin 54,  Ball E14, Symphony J30:18 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2) */
                         MX8MM_IOMUXC_UART2_TXD_GPIO5_IO25          0x000001f4    /* CS - Som pin 171, Ball E16, Symphony J18:7 - Unused bits 31-9, 0b1(Pull Resistor=On), 0b1(Hysteresis=On), 0b1(Pull Direction=Up), 0b1(Open Drain=On), 0b10(Slew=Fast), 0b10x(DSE=X2) */
 		>;
 	};
