@@ -123,7 +123,7 @@
                         MX8MM_IOMUXC_ECSPI2_SCLK_ECSPI2_SCLK       0x00000012    /* SOM pin 75, Ball E6, Symphony J17:6 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b01x(DSE=X4) */
                         MX8MM_IOMUXC_ECSPI2_MISO_ECSPI2_MISO       0x00000012    /* SOM pin 77, Ball A8, Symphony J17:8 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b01x(DSE=X4) */
                         MX8MM_IOMUXC_ECSPI2_MOSI_ECSPI2_MOSI       0x00000012    /* SOM pin 70, Ball B8, Symphony J17:4 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b01x(DSE=X4) */ 
-                        MX8MM_IOMUXC_GPIO1_IO13_GPIO1_IO13         0x000001d4    /* CS - SOM pin 40, Ball AD9, Symphony J17:2 - Unused 0b1(Pull Resistor=On), 0b1(Hysteresis=On), 0b1(Pull Direction=Up), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2)*/
+                        MX8MM_IOMUXC_GPIO1_IO13_GPIO1_IO13         0x000001d4    /* CS - SOM pin 40, Ball AD9, Symphony J17:2 - Unused 0b1(Pull Resistor=On), 0b1(Hysteresis=On), 0b1(Pull Direction=Up), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2) */
 		>;
 	};
        
@@ -371,7 +371,7 @@
 	};
 
 	lm75@4b {
-		compatible = "ti.tmp275";
+		compatible = "ti,tmp275";
 		reg = <0x4b>;
 		status = "okay";
 	};
@@ -507,5 +507,5 @@
                 reg = <0>;
                 spi-max-frequency = <5000000>;
                 status = "okay";
-        }                                     
+        };                          
 };
