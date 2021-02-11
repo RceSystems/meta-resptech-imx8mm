@@ -120,20 +120,29 @@
 
 	pinctrl_spi_max14830: spi_max14830grp {
 		fsl,pins = <
-                        MX8MM_IOMUXC_ECSPI2_SCLK_ECSPI2_SCLK       0x00000013    /* SOM pin 75, Ball E6, Symphony J17:6 */
-                        MX8MM_IOMUXC_ECSPI2_MISO_ECSPI2_MISO       0x00000013    /* SOM pin 77, Ball A8, Symphony J17:8 */
-                        MX8MM_IOMUXC_ECSPI2_MOSI_ECSPI2_MOSI       0x00000013    /* SOM pin 70, Ball B8, Symphony J17:4 */ 
-                        MX8MM_IOMUXC_GPIO1_IO13_GPIO1_IO13         0x000001d4    /* CS - SOM pin 40, Ball AD9, Symphony J17:2 - Unused 0b1(Pull Resistor=Enabled), 0b1(Hysteresis=Enabled), 0b1(Pull Direction=Up), 0b0(Open Drain=On), 0b10(Slew=Fast), 0b100(DSE=X2)*/
-/*                        MX8MM_IOMUXC_ECSPI2_SS0_GPIO5_IO13         0x000001d4       CS - SOM pin 79, Ball A6, Symphony J17:10 0b1(Pull Resistor=Enabled), 0b1(Hysteresis=Enabled), 0b1(Pull Direction=Up), 0b0(Open Drain=On), 0b10(Slew=Fast), 0b100(DSE=X2) */
+                        MX8MM_IOMUXC_ECSPI2_SCLK_ECSPI2_SCLK       0x00000012    /* SOM pin 75, Ball E6, Symphony J17:6 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b01x(DSE=X4) */
+                        MX8MM_IOMUXC_ECSPI2_MISO_ECSPI2_MISO       0x00000012    /* SOM pin 77, Ball A8, Symphony J17:8 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b01x(DSE=X4) */
+                        MX8MM_IOMUXC_ECSPI2_MOSI_ECSPI2_MOSI       0x00000012    /* SOM pin 70, Ball B8, Symphony J17:4 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b01x(DSE=X4) */ 
+                        MX8MM_IOMUXC_GPIO1_IO13_GPIO1_IO13         0x000001d4    /* CS - SOM pin 40, Ball AD9, Symphony J17:2 - Unused 0b1(Pull Resistor=On), 0b1(Hysteresis=On), 0b1(Pull Direction=Up), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2)*/
 		>;
 	};
        
 	pinctrl_max14830: max14830grp {
 		fsl,pins = <
-                        MX8MM_IOMUXC_GPIO1_IO08_GPIO1_IO8          0x000001d4    /* IRQ - SOM pin 117, Ball AG10, Symphony J17:7 0b1(Pull Resistor=Enabled), 0b1(Hysteresis=Enabled), 0b1(Pull Direction=Up), 0b0(Open Drain=On), 0b10(Slew=Fast), 0b100(DSE=X2)*/
-/*                        MX8MM_IOMUXC_GPIO1_IO13_GPIO1_IO13         0x000001d4       RST - SOM pin 40, Ball AD9, Symphony J17:2 - Unused 0b1(Pull Resistor=Enabled), 0b1(Hysteresis=Enabled), 0b1(Pull Direction=Up), 0b0(Open Drain=On), 0b10(Slew=Fast), 0b100(DSE=X2)*/
+                        MX8MM_IOMUXC_GPIO1_IO08_GPIO1_IO8          0x000001d0    /* IRQ - SOM pin 117, Ball AG10, Symphony J17:7 - Unused bits 31-9, 0b1(Pull Resistor=On), 0b1(Hysteresis=On), 0b1(Pull Direction=Up), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b00x(DSE=X1) */
 		>;
 	};
+
+
+	pinctrl_spi_mr20h40: spi_mr20h40grp {
+		fsl,pins = <
+                        MX8MM_IOMUXC_UART2_RXD_ECSPI3_MISO         0x00000014    /* Som pin 115, Ball F15, Symphony J18:9 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2) */
+                        MX8MM_IOMUXC_UART1_TXD_ECSPI3_MOSI         0x00000014    /* Som pin 56,  Ball F13, Symphony J30:4 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2) */
+                        MX8MM_IOMUXC_UART1_RXD_ECSPI3_SCK          0x00000014    /* Som pin 54,  Ball E14, Symphony J30:18 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2) */
+                        MX8MM_IOMUXC_UART2_TXD_GPIO5_IO25          0x000001f4    /* CS - Som pin 171, Ball E16, Symphony J18:7 - Unused bits 31-9, 0b1(Pull Resistor=On), 0b1(Hysteresis=On), 0b1(Pull Direction=Up), 0b1(Open Drain=On), 0b10(Slew=Fast), 0b10x(DSE=X2) */
+		>;
+	};
+
 
 	pinctrl_i2c2: i2c2grp {
 		fsl,pins = <
@@ -484,3 +493,19 @@
         };
 };
 
+
+&ecspi3 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_spi_mr20h40>;
+	cs-gpios = <&gpio5 25 GPIO_ACTIVE_LOW>;
+	status = "okay";
+
+        mr20h40: mr20h40@0 {
+                compatible = "mr25h40", "jedec,spi-nor"; 
+                #address-cells = <1>;
+                #size-cells = <1>;
+                reg = <0>;
+                spi-max-frequency = <5000000>;
+                status = "okay";
+        }                                     
+};
