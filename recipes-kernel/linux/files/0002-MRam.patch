@@ -1,44 +1,33 @@
 diff --git a/drivers/mtd/spi-nor/spi-nor.c b/drivers/mtd/spi-nor/spi-nor.c
-index 0cae20f09aba..3a0ad2d4a1b0 100644
+index 0cae20f09aba..f3cf9af03cfb 100644
 --- a/drivers/mtd/spi-nor/spi-nor.c
 +++ b/drivers/mtd/spi-nor/spi-nor.c
-@@ -233,6 +233,7 @@ struct flash_info {
- #define SPI_NOR_SKIP_SFDP	BIT(13)	/* Skip parsing of SFDP tables */
- #define USE_CLSR		BIT(14)	/* use CLSR command */
- #define SPI_NOR_OCTAL_READ	BIT(15)	/* Flash supports Octal Read */
-+#define SPI_NOR_IGNORE_WIP      BIT(16)         /* Roy FRAM is never busy */
- 
- 	/* Part specific fixup hooks. */
- 	const struct spi_nor_fixups *fixups;
-@@ -759,6 +760,8 @@ static int spi_nor_sr_ready(struct spi_nor *nor)
- 		return -EIO;
+@@ -414,6 +414,8 @@ static int read_sr(struct spi_nor *nor)
+ 		return ret;
  	}
  
-+	if (nor->flags & SNOR_F_IGNORE_WIP) { sr &= ~SR_WIP; } 
-+
- 	return !(sr & SR_WIP);
++        nor->bouncebuf[0] &= ~SR_WIP;  // Roy clear the WIP bit 
++        
+ 	return nor->bouncebuf[0];
  }
  
-@@ -2195,7 +2198,7 @@ static const struct flash_info spi_nor_ids[] = {
- 	{ "mr25h128", CAT25_INFO( 16 * 1024, 1, 256, 2, SPI_NOR_NO_ERASE | SPI_NOR_NO_FR) },
- 	{ "mr25h256", CAT25_INFO( 32 * 1024, 1, 256, 2, SPI_NOR_NO_ERASE | SPI_NOR_NO_FR) },
- 	{ "mr25h10",  CAT25_INFO(128 * 1024, 1, 256, 3, SPI_NOR_NO_ERASE | SPI_NOR_NO_FR) },
--	{ "mr25h40",  CAT25_INFO(512 * 1024, 1, 256, 3, SPI_NOR_NO_ERASE | SPI_NOR_NO_FR) },
-+	{ "mr25h40",  CAT25_INFO(512 * 1024, 1, 256, 3, SPI_NOR_NO_ERASE | SPI_NOR_NO_FR | SPI_NOR_IGNORE_WIP) },
+@@ -802,6 +804,7 @@ static int spi_nor_fsr_ready(struct spi_nor *nor)
  
- 	/* Fujitsu */
- 	{ "mb85rs1mt", INFO(0x047f27, 0, 128 * 1024, 1, SPI_NOR_NO_ERASE) },
-@@ -4925,6 +4928,9 @@ int spi_nor_scan(struct spi_nor *nor, const char *name,
- 	if (info->flags & SPI_NOR_NO_ERASE)
- 		mtd->flags |= MTD_NO_ERASE;
+ static int spi_nor_ready(struct spi_nor *nor)
+ {
++        
+ 	int sr, fsr;
  
-+	if (info->flags & SPI_NOR_IGNORE_WIP)
-+		nor->flags |= SNOR_F_IGNORE_WIP;
-+
- 	mtd->dev.parent = dev;
- 	nor->page_size = params->page_size;
- 	mtd->writebufsize = nor->page_size;
-@@ -5006,6 +5012,8 @@ static int spi_nor_probe(struct spi_mem *spimem)
+ 	if (nor->flags & SNOR_F_READY_XSR_RDY)
+@@ -813,6 +816,7 @@ static int spi_nor_ready(struct spi_nor *nor)
+ 	fsr = nor->flags & SNOR_F_USE_FSR ? spi_nor_fsr_ready(nor) : 1;
+ 	if (fsr < 0)
+ 		return fsr;
++	
+ 	return sr && fsr;
+ }
+ 
+@@ -5006,6 +5010,8 @@ static int spi_nor_probe(struct spi_mem *spimem)
  	if (!nor->mtd.name)
  		nor->mtd.name = spi_mem_get_name(spimem);
  
@@ -47,6 +36,14 @@ index 0cae20f09aba..3a0ad2d4a1b0 100644
  	/*
  	 * For some (historical?) reason many platforms provide two different
  	 * names in flash_platform_data: "name" and "type". Quite often name is
+@@ -5020,6 +5026,7 @@ static int spi_nor_probe(struct spi_mem *spimem)
+ 		flash_name = spi->modalias;
+ 
+ 	ret = spi_nor_scan(nor, flash_name, &hwcaps);
++	
+ 	if (ret)
+ 		return ret;
+ 
 diff --git a/include/linux/mtd/spi-nor.h b/include/linux/mtd/spi-nor.h
 index fc0b4b19c900..887da3672d82 100644
 --- a/include/linux/mtd/spi-nor.h

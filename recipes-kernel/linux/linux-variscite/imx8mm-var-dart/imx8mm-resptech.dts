@@ -279,67 +279,10 @@
 	pinctrl-1 = <&pinctrl_i2c2_gpio>;
 	scl-gpios = <&gpio5 16 GPIO_ACTIVE_HIGH>;
 	sda-gpios = <&gpio5 17 GPIO_ACTIVE_HIGH>;
-	status = "okay";
-
-	/* GPIO expander */
-	pca9534: gpio@20 {
-		compatible = "nxp,pca9534";
-		reg = <0x20>;
-		gpio-controller;
-		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_pca9534>;
-		interrupt-parent = <&gpio1>;
-		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
-		#gpio-cells = <2>;
-		wakeup-source;
-
-		usb3_sel_hog {
-			gpio-hog;
-			gpios = <4 GPIO_ACTIVE_HIGH>;
-			output-low;
-			line-name = "usb3_sel";
-		};
-
-		enet_rst_hog {
-			gpio-hog;
-			gpios = <5 GPIO_ACTIVE_HIGH>;
-			output-low;
-			line-name = "enet_rst";
-		};
-
-		som_vsel_hog {
-			gpio-hog;
-			gpios = <6 GPIO_ACTIVE_HIGH>;
-			output-low;
-			line-name = "som_vsel";
-		};
-
-		enet_sel_hog {
-			gpio-hog;
-			gpios = <7 GPIO_ACTIVE_HIGH>;
-			output-low;
-			line-name = "enet_sel";
-		};
-	};
+	status = "disabled";
 };
 
 &i2c3 {
-	/* Capacitive touch controller */
-	ft5x06_ts: ft5x06_ts@38 {
-		status = "okay";
-		compatible = "edt,edt-ft5206";
-		reg = <0x38>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_captouch>;
-		interrupt-parent = <&gpio5>;
-		interrupts = <4 IRQ_TYPE_EDGE_FALLING>;
-		touchscreen-size-x = <800>;
-		touchscreen-size-y = <480>;
-		touchscreen-inverted-x;
-		touchscreen-inverted-y;
-		wakeup-source;
-	};
-
 	/* DS1337 RTC module */
 	rtc@68 {
 		status = "okay";
@@ -349,14 +292,30 @@
 };
 
 &i2c4 {
-	clock-frequency = <100000>;
+	clock-frequency = <400000>;
 	pinctrl-names = "default", "gpio";
 	pinctrl-0 = <&pinctrl_i2c4>;
 	pinctrl-1 = <&pinctrl_i2c4_gpio>;
 	scl-gpios = <&gpio5 20 GPIO_ACTIVE_HIGH>;
 	sda-gpios = <&gpio5 21 GPIO_ACTIVE_HIGH>;
 	status = "okay";
+
+
+        gpio@26 {
+                compatible = "microchip,mcp23008"
+                reg = <0x26>;
+                gpio-controller;
+                #gpio-cells = <2>;
+        };
 	
+        gpio@27 {
+                compatible = "microchip,mcp23008"
+                reg = <0x27>;
+                gpio-controller;
+                #gpio-cells = <2>;
+        };
+
+
 	lm75@48 {
 		compatible = "ti,tmp275";
 		reg = <0x48>;
@@ -368,6 +327,8 @@
 		reg = <0x4b>;
 		status = "okay";
 	};
+
+        
 };
 
 &pcie0{
@@ -487,7 +448,7 @@
 	status = "okay";
 
         mr20h40: mr20h40@0 {
-                compatible = "mr25h40", "jedec,spi-nor"; 
+                compatible = "mr25h40"; 
                 #address-cells = <1>;
                 #size-cells = <1>;
                 reg = <0>;
