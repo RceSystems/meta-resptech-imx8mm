@@ -300,21 +300,19 @@
 	sda-gpios = <&gpio5 21 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 
-
         gpio@26 {
-                compatible = "microchip,mcp23008"
+                compatible = "microchip,mcp23008";
                 reg = <0x26>;
                 gpio-controller;
                 #gpio-cells = <2>;
         };
 	
         gpio@27 {
-                compatible = "microchip,mcp23008"
+                compatible = "microchip,mcp23008";
                 reg = <0x27>;
                 gpio-controller;
                 #gpio-cells = <2>;
         };
-
 
 	lm75@48 {
 		compatible = "ti,tmp275";
@@ -327,8 +325,6 @@
 		reg = <0x4b>;
 		status = "okay";
 	};
-
-        
 };
 
 &pcie0{
