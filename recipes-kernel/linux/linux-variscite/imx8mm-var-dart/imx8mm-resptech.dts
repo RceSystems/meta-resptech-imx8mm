@@ -35,43 +35,6 @@
 		status = "okay";
 	};
 
-	gpio-keys {
-		compatible = "gpio-keys";
-		status = "okay";
-
-		back {
-			label = "Back";
-			gpios = <&pca9534 1 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_BACK>;
-			wakeup-source;
-		};
-
-		home {
-			label = "Home";
-			gpios = <&pca9534 2 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_HOME>;
-			wakeup-source;
-		};
-
-		menu {
-			label = "Menu";
-			gpios = <&pca9534 3 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_MENU>;
-			wakeup-source;
-		};
-	};
-
-	leds {
-		compatible = "gpio-leds";
-		status = "okay";
-
-		heartbeat {
-			label = "Heartbeat";
-			gpios = <&pca9534 0 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "heartbeat";
-		};
-	};
-
 	pcie0_refclk: pcie0-refclk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -169,12 +132,6 @@
 		fsl,pins = <
 			MX8MM_IOMUXC_I2C4_SCL_GPIO5_IO20		0x1c3
 			MX8MM_IOMUXC_I2C4_SDA_GPIO5_IO21		0x1c3
-		>;
-	};
-
-	pinctrl_pca9534: pca9534grp {
-		fsl,pins = <
-			MX8MM_IOMUXC_GPIO1_IO07_GPIO1_IO7		0x16
 		>;
 	};
 
