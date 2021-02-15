@@ -128,6 +128,10 @@
 		>;
 	};
 
+        pinctrl_mcp23008_u9_irq: mcp23008_u9-irq-gpio {
+                fsl,pins = < >;
+        };
+
 	pinctrl_i2c4_gpio: i2c4grp-gpio {
 		fsl,pins = <
 			MX8MM_IOMUXC_I2C4_SCL_GPIO5_IO20		0x1c3
@@ -234,7 +238,7 @@
 	pinctrl-names = "default", "gpio";
 	pinctrl-0 = <&pinctrl_i2c2>;
 	pinctrl-1 = <&pinctrl_i2c2_gpio>;
-	scl-gpios = <&gpio5 16 GPIO_ACTIVE_HIGH>;
+	scl-gpios = <&gpio5 16 GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN>;
 	sda-gpios = <&gpio5 17 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 };
@@ -253,7 +257,7 @@
 	pinctrl-names = "default", "gpio";
 	pinctrl-0 = <&pinctrl_i2c4>;
 	pinctrl-1 = <&pinctrl_i2c4_gpio>;
-	scl-gpios = <&gpio5 20 GPIO_ACTIVE_HIGH>;
+	scl-gpios = <&gpio5 20 GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN>;
 	sda-gpios = <&gpio5 21 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 
@@ -262,6 +266,31 @@
                 reg = <0x26>;
                 gpio-controller;
                 #gpio-cells = <2>;
+                
+                line_gp0 {
+                        gpio-hog;
+                        gpios = <0 1>;
+                        output-high;
+                        line-name = "hub1_vbus_detect";
+                };
+                line_gp1 {
+                        gpio-hog;
+                        gpios = <1 1>;
+                        output-high;
+                        line-name = "hub2_vbus_detect";
+                };
+                line_gp2 {
+                        gpio-hog;
+                        gpios = <2 0>;
+                        output-high;
+                        line-name = "amp_off";
+                };
+                line_gp5 {
+                        gpio-hog;
+                        gpios = <5 0>;
+                        input;
+                        line-name = "tamper"
+                };   
         };
 	
         gpio@27 {
@@ -269,6 +298,54 @@
                 reg = <0x27>;
                 gpio-controller;
                 #gpio-cells = <2>;
+                line_gp0 {
+                        gpio-hog;
+                        gpios = <0 1>;
+                        output-high;
+                        line-name = "usb_pwr1";
+                };
+                line_gp1 {
+                        gpio-hog;
+                        gpios = <1 1>;
+                        output-high;
+                        line-name = "usb_pwr2";
+                };
+                line_gp2 {
+                        gpio-hog;
+                        gpios = <2 1>;
+                        output-high;
+                        line-name = "usb_pwr3";
+                };
+                line_gp3 {
+                        gpio-hog;
+                        gpios = <3 1>;
+                        output-high;
+                        line-name = "usb_pwr4";
+                };
+                line_gp4 {
+                        gpio-hog;
+                        gpios = <4 1>;
+                        output-high;
+                        line-name = "usb_pwr5";
+                };
+                line_gp5 {
+                        gpio-hog;
+                        gpios = <5 1>;
+                        output-high;
+                        line-name = "usb_pwr6";
+                };
+                line_gp6 {
+                        gpio-hog;
+                        gpios = <6 1>;
+                        output-high;
+                        line-name = "usb_pwr7";
+                };
+                line_gp7 {
+                        gpio-hog;
+                        gpios = <7 1>;
+                        output-high;
+                        line-name = "usb_pwr8";
+                };
         };
 
 	lm75@48 {
