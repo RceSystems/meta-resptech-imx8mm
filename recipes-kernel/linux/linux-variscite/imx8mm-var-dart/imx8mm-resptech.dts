@@ -441,6 +441,10 @@
         };
 };
 
+
+&ecspi1 {
+        status = "disabled";        
+};
 	
 &ecspi2 {
 	pinctrl-names = "default";
