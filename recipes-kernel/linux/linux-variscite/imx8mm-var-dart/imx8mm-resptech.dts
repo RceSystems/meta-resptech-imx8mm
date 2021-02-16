@@ -75,12 +75,6 @@
 };
 
 &iomuxc {
-	pinctrl_captouch: captouchgrp {
-		fsl,pins = <
-			MX8MM_IOMUXC_SPDIF_RX_GPIO5_IO4			0x16
-		>;
-	};
-
 	pinctrl_spi_max14830: spi_max14830grp {
 		fsl,pins = <
                         MX8MM_IOMUXC_ECSPI2_SCLK_ECSPI2_SCLK       0x00000012    /* SOM pin 75, Ball E6, Symphony J17:6 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b01x(DSE=X4) */
@@ -127,11 +121,11 @@
 			MX8MM_IOMUXC_I2C2_SDA_GPIO5_IO17		0x1c3
 		>;
 	};
-
+/*
         pinctrl_mcp23008_u9_irq: mcp23008_u9-irq-gpio {
                 fsl,pins = < >;
         };
-
+*/
 	pinctrl_i2c4_gpio: i2c4grp-gpio {
 		fsl,pins = <
 			MX8MM_IOMUXC_I2C4_SCL_GPIO5_IO20		0x1c3
