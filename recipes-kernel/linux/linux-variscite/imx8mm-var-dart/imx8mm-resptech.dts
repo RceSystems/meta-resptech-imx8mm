@@ -103,15 +103,16 @@
 
 	pinctrl_i2c2: i2c2grp {
 		fsl,pins = <
-			MX8MM_IOMUXC_I2C2_SCL_I2C2_SCL			0x400001c3
-			MX8MM_IOMUXC_I2C2_SDA_I2C2_SDA			0x400001c3
+			MX8MM_IOMUXC_I2C2_SCL_I2C2_SCL             0x400001c3
+			MX8MM_IOMUXC_I2C2_SDA_I2C2_SDA             0x400001c3
 		>;
 	};
 
 	pinctrl_i2c4: i2c4grp {
 		fsl,pins = <
-			MX8MM_IOMUXC_I2C4_SCL_I2C4_SCL			0x400001c3
-			MX8MM_IOMUXC_I2C4_SDA_I2C4_SDA			0x400001c3
+			MX8MM_IOMUXC_I2C4_SCL_I2C4_SCL             0x400001c3
+			MX8MM_IOMUXC_I2C4_SDA_I2C4_SDA             0x400001c3
+			MX8MM_IOMUXC_GPIO1_IO02_GPIO1_IO2          0x000001d0    /* U9_IRQ - SOM pin 48, Ball AG13, Symphony J17:5 - Unused bits 31-9, 0b1(Pull Resistor=On), 0b1(Hysteresis=On), 0b1(Pull Direction=Up), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b00x(DSE=X1) */
 		>;
 	};
 
@@ -121,11 +122,7 @@
 			MX8MM_IOMUXC_I2C2_SDA_GPIO5_IO17		0x1c3
 		>;
 	};
-/*
-        pinctrl_mcp23008_u9_irq: mcp23008_u9-irq-gpio {
-                fsl,pins = < >;
-        };
-*/
+
 	pinctrl_i2c4_gpio: i2c4grp-gpio {
 		fsl,pins = <
 			MX8MM_IOMUXC_I2C4_SCL_GPIO5_IO20		0x1c3
@@ -260,7 +257,9 @@
                 reg = <0x26>;
                 gpio-controller;
                 #gpio-cells = <2>;
-                
+                interrupt-parent = <&gpio1>;
+                interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
+                interrupt-controller;
                 line_gp0 {
                         gpio-hog;
                         gpios = <0 1>;
