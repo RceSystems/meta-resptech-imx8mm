@@ -91,7 +91,7 @@
 	};
 
 
-	pinctrl_spi_mr20h40: spi_mr20h40grp {
+	pinctrl_spi_fram: spi_framgrp {
 		fsl,pins = <
                         MX8MM_IOMUXC_UART2_RXD_ECSPI3_MISO         0x00000014    /* Som pin 115, Ball F15, Symphony J18:9 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2) */
                         MX8MM_IOMUXC_UART1_TXD_ECSPI3_MOSI         0x00000014    /* Som pin 56,  Ball F13, Symphony J30:4 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b10x(DSE=X2) */
@@ -112,7 +112,7 @@
 		fsl,pins = <
 			MX8MM_IOMUXC_I2C4_SCL_I2C4_SCL             0x400001c3
 			MX8MM_IOMUXC_I2C4_SDA_I2C4_SDA             0x400001c3
-			MX8MM_IOMUXC_GPIO1_IO02_GPIO1_IO2          0x000001d0    /* U9_IRQ - SOM pin 48, Ball AG13, Symphony J17:5 - Unused bits 31-9, 0b1(Pull Resistor=On), 0b1(Hysteresis=On), 0b1(Pull Direction=Up), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b00x(DSE=X1) */
+			MX8MM_IOMUXC_GPIO1_IO00_GPIO1_IO0          0x000001d0    /* U9_IRQ - SOM pin 81, Ball AG14, Symphony J30:13 - Unused bits 31-9, 0b1(Pull Resistor=On), 0b1(Hysteresis=On), 0b1(Pull Direction=Up), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b00x(DSE=X1) */
 		>;
 	};
 
@@ -244,7 +244,7 @@
 };
 
 &i2c4 {
-	clock-frequency = <400000>;
+	clock-frequency = <100000>;
 	pinctrl-names = "default", "gpio";
 	pinctrl-0 = <&pinctrl_i2c4>;
 	pinctrl-1 = <&pinctrl_i2c4_gpio>;
@@ -252,14 +252,16 @@
 	sda-gpios = <&gpio5 21 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 
+/*
         gpio@26 {
                 compatible = "microchip,mcp23008";
                 reg = <0x26>;
                 gpio-controller;
                 #gpio-cells = <2>;
                 interrupt-parent = <&gpio1>;
-                interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
+                interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
                 interrupt-controller;
+                interrupt-cells = <2>;
                 line_gp0 {
                         gpio-hog;
                         gpios = <0 1>;
@@ -285,59 +287,20 @@
                         line-name = "tamper";
                 };   
         };
-	
+*/	
         gpio@27 {
                 compatible = "microchip,mcp23008";
                 reg = <0x27>;
                 gpio-controller;
                 #gpio-cells = <2>;
-                line_gp0 {
-                        gpio-hog;
-                        gpios = <0 1>;
+                pinctrl-names = "default";
+                pinctrl-0 = <&gpio27outputs>;
+/*                gpio-line-names = "USB_PWR1", "USB_PWR2", "USB_PWR3", "USB_PWR4",*/
+/*                                  "USB_PWR5", "USB_PWR6", "USB_PWR7", "USB_PWR8";*/
+                gpio27outputs: pinmux {
+                        pins = "gpio0", "gpio1", "gpio2", "gpio3",
+                               "gpio4", "gpio5", "gpio6", "gpio7";
                         output-high;
-                        line-name = "usb_pwr1";
-                };
-                line_gp1 {
-                        gpio-hog;
-                        gpios = <1 1>;
-                        output-high;
-                        line-name = "usb_pwr2";
-                };
-                line_gp2 {
-                        gpio-hog;
-                        gpios = <2 1>;
-                        output-high;
-                        line-name = "usb_pwr3";
-                };
-                line_gp3 {
-                        gpio-hog;
-                        gpios = <3 1>;
-                        output-high;
-                        line-name = "usb_pwr4";
-                };
-                line_gp4 {
-                        gpio-hog;
-                        gpios = <4 1>;
-                        output-high;
-                        line-name = "usb_pwr5";
-                };
-                line_gp5 {
-                        gpio-hog;
-                        gpios = <5 1>;
-                        output-high;
-                        line-name = "usb_pwr6";
-                };
-                line_gp6 {
-                        gpio-hog;
-                        gpios = <6 1>;
-                        output-high;
-                        line-name = "usb_pwr7";
-                };
-                line_gp7 {
-                        gpio-hog;
-                        gpios = <7 1>;
-                        output-high;
-                        line-name = "usb_pwr8";
                 };
         };
 
@@ -470,12 +433,12 @@
 
 &ecspi3 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_spi_mr20h40>;
+	pinctrl-0 = <&pinctrl_spi_fram>;
 	cs-gpios = <&gpio5 25 GPIO_ACTIVE_LOW>;
 	status = "okay";
 
-        mr20h40: mr20h40@0 {
-                compatible = "mr25h40"; 
+        fram: fram@0 {
+                compatible = "jedec,spi-nor"; 
                 #address-cells = <1>;
                 #size-cells = <1>;
                 reg = <0>;
