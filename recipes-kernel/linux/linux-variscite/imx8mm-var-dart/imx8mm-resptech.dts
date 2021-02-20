@@ -35,6 +35,17 @@
 		status = "okay";
 	};
 
+        leds {
+                compatible = "gpio-leds";
+                status = "okay";
+
+                heartbeat {
+                        label = "Heartbeat";
+                        gpios = <&tca9534_io 3 GPIO_ACTIVE_HIGH>;
+                        linux,default-trigger = "heartbeat";
+                };
+        };
+
 	pcie0_refclk: pcie0-refclk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -256,47 +267,6 @@
 	scl-gpios = <&gpio5 20 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
 	sda-gpios = <&gpio5 21 GPIO_ACTIVE_HIGH>;
 	status = "okay";
-
-        /* GPIO expander */
-        tca9534_io: gpio@20 {
-                compatible = "nxp,pca9534";
-                reg = <0x20>;
-                gpio-controller;
-                pinctrl-names = "default";
-                pinctrl-0 = <&pinctrl_tca9534_io>;
-                interrupt-parent = <&gpio1>;
-                interrupts = <0 IRQ_TYPE_EDGE_FALLING>;
-                #gpio-cells = <2>;
-                wakeup-source;
-
-                usb3_sel_hog {
-                        gpio-hog;
-                        gpios = <4 GPIO_ACTIVE_HIGH>;
-                        output-low;
-                        line-name = "usb3_sel";
-                };
-
-                enet_rst_hog {
-                        gpio-hog;
-                        gpios = <5 GPIO_ACTIVE_HIGH>;
-                        output-low;
-                        line-name = "enet_rst";
-                };
-
-                som_vsel_hog {
-                        gpio-hog;
-                        gpios = <6 GPIO_ACTIVE_HIGH>;
-                        output-low;
-                        line-name = "som_vsel";
-                };
-
-                enet_sel_hog {
-                        gpio-hog;
-                        gpios = <7 GPIO_ACTIVE_HIGH>;
-                        output-low;
-                        line-name = "enet_sel";
-                };
-        };
 
         tca9534_io: gpio@20 {
                 compatible = "nxp,pca9534";
