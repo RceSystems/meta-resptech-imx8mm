@@ -308,8 +308,6 @@
                 compatible = "nxp,pca9534";
                 reg = <0x20>;
                 gpio-controller;
-                pinctrl-names = "default";
-                pinctrl-0 = <&pinctrl_tca9534_io>;
                 #gpio-cells = <2>;
                 line_gp0 {
                         gpio-hog;
