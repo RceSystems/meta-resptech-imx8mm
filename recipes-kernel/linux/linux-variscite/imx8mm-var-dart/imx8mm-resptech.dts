@@ -306,7 +306,7 @@
 
         tca9534_out: gpio@27 {
                 compatible = "nxp,pca9534";
-                reg = <0x20>;
+                reg = <0x27>;
                 gpio-controller;
                 #gpio-cells = <2>;
                 line_gp0 {
