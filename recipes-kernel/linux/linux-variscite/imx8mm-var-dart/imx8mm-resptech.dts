@@ -112,7 +112,12 @@
 		fsl,pins = <
 			MX8MM_IOMUXC_I2C4_SCL_I2C4_SCL             0x400001c3
 			MX8MM_IOMUXC_I2C4_SDA_I2C4_SDA             0x400001c3
-			MX8MM_IOMUXC_GPIO1_IO00_GPIO1_IO0          0x000001d0    /* U9_IRQ - SOM pin 81, Ball AG14, Symphony J30:13 - Unused bits 31-9, 0b1(Pull Resistor=On), 0b1(Hysteresis=On), 0b1(Pull Direction=Up), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b00x(DSE=X1) */
+		>;
+	};
+
+        pinctrl_tca9534_io_irq: tca9534grp {
+		fsl,pins = <
+			MX8MM_IOMUXC_GPIO1_IO00_GPIO1_IO0          0x00000016    /* U9_IRQ - SOM pin 81, Ball AG14, Symphony J30:13 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Donw), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b11x(DSE=X6) */
 		>;
 	};
 
@@ -252,55 +257,137 @@
 	sda-gpios = <&gpio5 21 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 
-/*
-        gpio@26 {
-                compatible = "microchip,mcp23008";
-                reg = <0x26>;
+        /* GPIO expander */
+        tca9534_io: gpio@20 {
+                compatible = "nxp,pca9534";
+                reg = <0x20>;
                 gpio-controller;
-                #gpio-cells = <2>;
+                pinctrl-names = "default";
+                pinctrl-0 = <&pinctrl_tca9534_io>;
                 interrupt-parent = <&gpio1>;
-                interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
-                interrupt-controller;
-                interrupt-cells = <2>;
+                interrupts = <0 IRQ_TYPE_EDGE_FALLING>;
+                #gpio-cells = <2>;
+                wakeup-source;
+
+                usb3_sel_hog {
+                        gpio-hog;
+                        gpios = <4 GPIO_ACTIVE_HIGH>;
+                        output-low;
+                        line-name = "usb3_sel";
+                };
+
+                enet_rst_hog {
+                        gpio-hog;
+                        gpios = <5 GPIO_ACTIVE_HIGH>;
+                        output-low;
+                        line-name = "enet_rst";
+                };
+
+                som_vsel_hog {
+                        gpio-hog;
+                        gpios = <6 GPIO_ACTIVE_HIGH>;
+                        output-low;
+                        line-name = "som_vsel";
+                };
+
+                enet_sel_hog {
+                        gpio-hog;
+                        gpios = <7 GPIO_ACTIVE_HIGH>;
+                        output-low;
+                        line-name = "enet_sel";
+                };
+        };
+
+        tca9534_io: gpio@20 {
+                compatible = "nxp,pca9534";
+                reg = <0x20>;
+                gpio-controller;
+                pinctrl-names = "default";
+                pinctrl-0 = <&pinctrl_tca9534_io_irq>;
+                interrupt-parent = <&gpio1>;
+                interrupts = <0 IRQ_TYPE_EDGE_FALLING>;
+                #gpio-cells = <2>;
+                wakeup-source;
                 line_gp0 {
                         gpio-hog;
-                        gpios = <0 1>;
+                        gpios = <0 GPIO_ACTIVE_HIGH>;
                         output-high;
                         line-name = "hub1_vbus_detect";
                 };
                 line_gp1 {
                         gpio-hog;
-                        gpios = <1 1>;
+                        gpios = <1 GPIO_ACTIVE_HIGH>;
                         output-high;
                         line-name = "hub2_vbus_detect";
                 };
                 line_gp2 {
                         gpio-hog;
-                        gpios = <2 0>;
+                        gpios = <2 GPIO_ACTIVE_LOW>;
                         output-high;
                         line-name = "amp_off";
                 };
                 line_gp5 {
                         gpio-hog;
-                        gpios = <5 0>;
+                        gpios = <5 GPIO_ACTIVE_LOW>;
                         input;
                         line-name = "tamper";
-                };   
+                };
         };
-*/	
-        gpio@27 {
-                compatible = "microchip,mcp23008";
-                reg = <0x27>;
+
+        tca9534_out: gpio@27 {
+                compatible = "nxp,pca9534";
+                reg = <0x20>;
                 gpio-controller;
-                #gpio-cells = <2>;
                 pinctrl-names = "default";
-                pinctrl-0 = <&gpio27outputs>;
-/*                gpio-line-names = "USB_PWR1", "USB_PWR2", "USB_PWR3", "USB_PWR4",*/
-/*                                  "USB_PWR5", "USB_PWR6", "USB_PWR7", "USB_PWR8";*/
-                gpio27outputs: pinmux {
-                        pins = "gpio0", "gpio1", "gpio2", "gpio3",
-                               "gpio4", "gpio5", "gpio6", "gpio7";
+                pinctrl-0 = <&pinctrl_tca9534_io>;
+                #gpio-cells = <2>;
+                line_gp0 {
+                        gpio-hog;
+                        gpios = <0 GPIO_ACTIVE_HIGH>;
                         output-high;
+                        line-name = "USB_PWR1";
+                };
+                line_gp1 {
+                        gpio-hog;
+                        gpios = <1 GPIO_ACTIVE_HIGH>;
+                        output-high;
+                        line-name = "USB_PWR2";
+                };
+                line_gp2 {
+                        gpio-hog;
+                        gpios = <2 GPIO_ACTIVE_HIGH>;
+                        output-high;
+                        line-name = "USB_PWR3";
+                };
+                line_gp3 {
+                        gpio-hog;
+                        gpios = <3 GPIO_ACTIVE_HIGH>;
+                        output-high;
+                        line-name = "USB_PWR4";
+                };
+                line_gp4 {
+                        gpio-hog;
+                        gpios = <4 GPIO_ACTIVE_HIGH>;
+                        output-high;
+                        line-name = "USB_PWR5";
+                };
+                line_gp5 {
+                        gpio-hog;
+                        gpios = <5 GPIO_ACTIVE_HIGH>;
+                        output-high;
+                        line-name = "USB_PWR6";
+                };
+                line_gp6 {
+                        gpio-hog;
+                        gpios = <6 GPIO_ACTIVE_HIGH>;
+                        output-high;
+                        line-name = "USB_PWR7";
+                };
+                line_gp7 {
+                        gpio-hog;
+                        gpios = <7 GPIO_ACTIVE_HIGH>;
+                        output-high;
+                        line-name = "USB_PWR8";
                 };
         };
 
