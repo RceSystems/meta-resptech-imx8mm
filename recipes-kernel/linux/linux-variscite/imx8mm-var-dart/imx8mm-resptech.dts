@@ -300,7 +300,7 @@
                 #gpio-cells = <2>;
                 gpio-line-names = "USB_PWR1", "USB_PWR2", "USB_PWR3", "USB_PWR4",
                                   "USB_PWR5", "USB_PWR6", "USB_PWR7", "USB_PWR8";
-                resets = <&usb_port_reset>;*/
+                resets = <&usb_port_reset>;
         };
 */
 
