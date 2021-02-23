@@ -43,7 +43,7 @@
                 initially-in-reset;
                 #reset-cells = <0>; 
         };
-
+*/
         leds {
                 compatible = "gpio-leds";
                 status = "okay";
@@ -54,7 +54,7 @@
                         linux,default-trigger = "heartbeat";
                 };
         };
-*/
+
 	pcie0_refclk: pcie0-refclk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
