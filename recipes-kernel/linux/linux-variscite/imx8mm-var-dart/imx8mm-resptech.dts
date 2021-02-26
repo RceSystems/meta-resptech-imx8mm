@@ -135,9 +135,15 @@
 		>;
 	};
 
+        pinctrl_isl12057_irq: isl12057grp {
+		fsl,pins = <
+			MX8MM_IOMUXC_SAI2_MCLK_GPIO4_IO27          0x00000156    /* RTC_IRQ - SOM pin 73, Ball AD19, Symphony J30:8 - Unused bits 31-9, 0b1(Pull Resistor=On), 0b0(Hysteresis=Off), 0b1(Pull Direction=Up), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b11x(DSE=X6) */
+		>;
+	};
+
         pinctrl_tca9534_io_irq: tca9534grp {
 		fsl,pins = <
-			MX8MM_IOMUXC_GPIO1_IO00_GPIO1_IO0          0x00000016    // U9_IRQ - SOM pin 81, Ball AG14, Symphony J30:13 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Donw), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b11x(DSE=X6)
+			MX8MM_IOMUXC_GPIO1_IO00_GPIO1_IO0          0x00000016    /* U9_IRQ - SOM pin 81, Ball AG14, Symphony J30:13 - Unused bits 31-9, 0b0(Pull Resistor=Off), 0b0(Hysteresis=Off), 0b0(Pull Direction=Down), 0b0(Open Drain=Off), 0b10(Slew=Fast), 0b11x(DSE=X6) */
 		>;
 	};
 
@@ -260,10 +266,14 @@
 };
 
 &i2c3 {
-	/* DS1337 RTC module */
+	/* RTC module */
 	rtc@68 {
-		compatible = "dallas,ds1337";
+		compatible = "isil,isl12057";
 		reg = <0x68>;
+                pinctrl-names = "default";
+                pinctrl-0 = <&pinctrl_isl12057_irq>;
+                interrupt-parent = <&gpio4>;
+                interrupts = <27 GPIO_ACTIVE_LOW>;
 		status = "okay";
 	};
 };
