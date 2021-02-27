@@ -275,6 +275,7 @@
                 interrupt-parent = <&gpio4>;
                 interrupts = <27 GPIO_ACTIVE_LOW>;
 		status = "okay";
+                wakeup-source;
 	};
 };
 
