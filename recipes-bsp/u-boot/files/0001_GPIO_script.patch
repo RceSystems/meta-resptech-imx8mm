@@ -1,0 +1,16 @@
+diff --git a/include/configs/imx8mm_var_dart.h b/include/configs/imx8mm_var_dart.h
+index 5fcebcc0e6..fa0c1dc2a0 100644
+--- a/include/configs/imx8mm_var_dart.h
++++ b/include/configs/imx8mm_var_dart.h
+@@ -158,6 +158,11 @@
+ 
+ #define CONFIG_BOOTCOMMAND \
+ 	"run ramsize_check; " \
++	"if gpio input 123; then " \
++	  "echo GPIO Active; " \
++	"else " \
++	  "echo GPIO Inactive; "
++        "fi; " \
+ 	"mmc dev ${mmcdev}; "\
+ 	"if mmc rescan; then " \
+ 		"if test ${use_m4} = yes && run loadm4bin; then " \
