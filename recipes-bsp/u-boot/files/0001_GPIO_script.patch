@@ -9,7 +9,7 @@ index 5fcebcc0e6..fa0c1dc2a0 100644
 +	"if gpio input 123; then " \
 +	  "echo GPIO Active; " \
 +	"else " \
-+	  "echo GPIO Inactive; "
++	  "echo GPIO Inactive; " \
 +        "fi; " \
  	"mmc dev ${mmcdev}; "\
  	"if mmc rescan; then " \
