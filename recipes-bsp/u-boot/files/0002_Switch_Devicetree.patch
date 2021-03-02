@@ -1,0 +1,13 @@
+diff --git a/configs/imx8mm_var_dart_defconfig b/configs/imx8mm_var_dart_defconfig
+index 7adfa26926..d0d29db5ab 100644
+--- a/configs/imx8mm_var_dart_defconfig
++++ b/configs/imx8mm_var_dart_defconfig
+@@ -28,7 +28,7 @@ CONFIG_SPL_FIT_GENERATOR="arch/arm/mach-imx/mkimage_fit_atf.sh"
+ CONFIG_OF_SYSTEM_SETUP=y
+ CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=arch/arm/mach-imx/imx8m/imximage.cfg"
+ CONFIG_BOOTDELAY=1
+-CONFIG_DEFAULT_FDT_FILE="imx8mm-var-dart.dtb"
++CONFIG_DEFAULT_FDT_FILE="imx8mm-resptech.dtb"
+ CONFIG_BOARD_LATE_INIT=y
+ CONFIG_ARCH_MISC_INIT=y
+ CONFIG_BOARD_EARLY_INIT_F=y
